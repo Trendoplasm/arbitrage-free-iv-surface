@@ -1,0 +1,253 @@
+{
+  "configuration": {
+    "start_date": "2011-01-07",
+    "end_date": "2026-06-30",
+    "held_out_maturity": "VIX6M",
+    "event_window_days": 10,
+    "stability_window_days": 21,
+    "bootstrap_iterations": 10000,
+    "random_seed": 20260820
+  },
+  "panel_days": 3891,
+  "observed_curve": [
+    {
+      "index": "VIX9D",
+      "horizon_days": 9.0,
+      "maturity_years": 0.024657534246575342,
+      "n": 3891,
+      "mean_iv": 0.1753022873297353,
+      "median_iv": 0.15289999999999998,
+      "p10_iv": 0.1075,
+      "p90_iv": 0.2692,
+      "mean_total_variance": 0.0009232846870227395
+    },
+    {
+      "index": "VIX",
+      "horizon_days": 30.0,
+      "maturity_years": 0.0821917808219178,
+      "n": 3891,
+      "mean_iv": 0.18177244924184013,
+      "median_iv": 0.1643,
+      "p10_iv": 0.1225,
+      "p90_iv": 0.2642,
+      "mean_total_variance": 0.0030966180010773016
+    },
+    {
+      "index": "VIX3M",
+      "horizon_days": 93.0,
+      "maturity_years": 0.2547945205479452,
+      "n": 3891,
+      "mean_iv": 0.20069385762014907,
+      "median_iv": 0.1868,
+      "p10_iv": 0.1454,
+      "p90_iv": 0.2818,
+      "mean_total_variance": 0.011189923111711958
+    },
+    {
+      "index": "VIX6M",
+      "horizon_days": 186.0,
+      "maturity_years": 0.5095890410958904,
+      "n": 3891,
+      "mean_iv": 0.21519128758673864,
+      "median_iv": 0.2027,
+      "p10_iv": 0.162,
+      "p90_iv": 0.294,
+      "mean_total_variance": 0.025082839382135805
+    },
+    {
+      "index": "VIX1Y",
+      "horizon_days": 365.0,
+      "maturity_years": 1.0,
+      "n": 3891,
+      "mean_iv": 0.2265053199691596,
+      "median_iv": 0.21600000000000003,
+      "p10_iv": 0.1759,
+      "p90_iv": 0.2958,
+      "mean_total_variance": 0.05339673923927011
+    }
+  ],
+  "calendar_arbitrage": {
+    "days_tested": 3891,
+    "first_date": "2011-01-07",
+    "last_date": "2026-06-30",
+    "days_with_violation": 0,
+    "violation_rate": 0.0,
+    "worst_variance_drop": 0.0,
+    "min_forward_variance": 0.009150909999999998,
+    "mean_min_forward_variance": 0.034641636914390816,
+    "days_forward_variance_negative": 0
+  },
+  "volatility_curve_inversions": {
+    "days_tested": 3891,
+    "short_maturity": "VIX9D",
+    "long_maturity": "VIX1Y",
+    "days_volatility_curve_inverted": 395,
+    "inversion_rate": 0.10151631971215626,
+    "inverted_yet_calendar_free": 395,
+    "inverted_and_arbitrageable": 0
+  },
+  "held_out_calibration": {
+    "n": 3891,
+    "mean_relative_error": -0.006596403720333418,
+    "median_absolute_error": 0.01821054480991677,
+    "p90_absolute_error": 0.04631767251652444,
+    "p99_absolute_error": 0.10741425695324212,
+    "worst_absolute_error": 0.2831841907030242,
+    "share_within_1pct": 0.2778206116679517,
+    "share_within_5pct": 0.920585967617579
+  },
+  "global_fits": [
+    {
+      "regime": "Unconstrained",
+      "no_arbitrage_enforced": false,
+      "calibration_dates": 204,
+      "rho": -0.2522863387498325,
+      "eta": 1.2651931777815297,
+      "gamma": 0.6284773392641736,
+      "global_skewness_rmse": 1.1390277029978166
+    },
+    {
+      "regime": "No-arbitrage enforced",
+      "no_arbitrage_enforced": true,
+      "calibration_dates": 204,
+      "rho": -0.5909223573690578,
+      "eta": 1.1257056427484857,
+      "gamma": 0.5381008791607494,
+      "global_skewness_rmse": 1.1453246789132818
+    }
+  ],
+  "calibration_comparison": [
+    {
+      "regime": "Unconstrained",
+      "no_arbitrage_enforced": false,
+      "rho": -0.2522863387498325,
+      "eta": 1.2651931777815297,
+      "gamma": 0.6284773392641736,
+      "days": 3886,
+      "feasible_days": 3886,
+      "skewness_rmse": 0.06712698335708817,
+      "median_absolute_skewness_error": 7.420730696594546e-13,
+      "arbitrage_free_days": 3066,
+      "arbitrage_free_rate": 0.7889861039629439,
+      "sufficient_conditions_rate": 0.0,
+      "worst_butterfly_g": -3.152725133519316,
+      "worst_density_mass_error": 0.7390116090783387,
+      "valid_density_rate": 0.7938754503345342
+    },
+    {
+      "regime": "No-arbitrage enforced",
+      "no_arbitrage_enforced": true,
+      "rho": -0.5909223573690578,
+      "eta": 1.1257056427484857,
+      "gamma": 0.5381008791607494,
+      "days": 3886,
+      "feasible_days": 3886,
+      "skewness_rmse": 0.633376418165773,
+      "median_absolute_skewness_error": 4.015010546254416e-11,
+      "arbitrage_free_days": 3886,
+      "arbitrage_free_rate": 1.0,
+      "sufficient_conditions_rate": 1.0,
+      "worst_butterfly_g": 0.24982832284598494,
+      "worst_density_mass_error": 5.229109397442144e-05,
+      "valid_density_rate": 1.0
+    }
+  ],
+  "parameter_stability": [
+    {
+      "regime": "No-arbitrage enforced",
+      "n": 3886,
+      "mean_rho": -0.5540925731539095,
+      "median_rho": -0.5473844956661704,
+      "sd_rho": 0.19928265684525787,
+      "min_rho": -0.9989999999999999,
+      "max_rho": -0.13464704619304738,
+      "mean_absolute_daily_change": 0.047830739142084265,
+      "max_absolute_daily_change": 0.6469701655139404,
+      "mean_rolling_sd": 0.07508957138538458,
+      "share_at_bound": 0.004374678332475553
+    },
+    {
+      "regime": "Unconstrained",
+      "n": 3886,
+      "mean_rho": -0.2902386469395334,
+      "median_rho": -0.23337267225906108,
+      "sd_rho": 0.20448982018049694,
+      "min_rho": -0.9978784694860066,
+      "max_rho": -0.006211655239733146,
+      "mean_absolute_daily_change": 0.04354020557012927,
+      "max_absolute_daily_change": 0.5919441052210174,
+      "mean_rolling_sd": 0.0737471650829184,
+      "share_at_bound": 0.004889346371590325
+    }
+  ],
+  "stress_episodes": [
+    {
+      "episode": "Volmageddon",
+      "date": "2018-02-05",
+      "days_in_window": 15,
+      "index_iv_on_the_day": 0.3732,
+      "peak_index_iv": 0.3732,
+      "peak_skew_index": 148.02,
+      "most_negative_skewness": -4.802000000000001,
+      "calendar_violations_in_window": 0,
+      "volatility_curve_inverted_days": 8
+    },
+    {
+      "episode": "Covid crash",
+      "date": "2020-03-16",
+      "days_in_window": 15,
+      "index_iv_on_the_day": 0.8269,
+      "peak_index_iv": 0.8269,
+      "peak_skew_index": 132.37,
+      "most_negative_skewness": -3.2370000000000005,
+      "calendar_violations_in_window": 0,
+      "volatility_curve_inverted_days": 15
+    },
+    {
+      "episode": "Rate shock",
+      "date": "2022-06-13",
+      "days_in_window": 14,
+      "index_iv_on_the_day": 0.34020000000000006,
+      "peak_index_iv": 0.34020000000000006,
+      "peak_skew_index": 125.16,
+      "most_negative_skewness": -2.5159999999999996,
+      "calendar_violations_in_window": 0,
+      "volatility_curve_inverted_days": 4
+    },
+    {
+      "episode": "Yen carry unwind",
+      "date": "2024-08-05",
+      "days_in_window": 15,
+      "index_iv_on_the_day": 0.3857,
+      "peak_index_iv": 0.3857,
+      "peak_skew_index": 147.37,
+      "most_negative_skewness": -4.737,
+      "calendar_violations_in_window": 0,
+      "volatility_curve_inverted_days": 6
+    },
+    {
+      "episode": "Tariff shock",
+      "date": "2025-04-04",
+      "days_in_window": 15,
+      "index_iv_on_the_day": 0.4531,
+      "peak_index_iv": 0.5233,
+      "peak_skew_index": 148.68,
+      "most_negative_skewness": -4.868,
+      "calendar_violations_in_window": 0,
+      "volatility_curve_inverted_days": 11
+    }
+  ],
+  "bootstrap": {
+    "held_out_absolute_error": [
+      0.022586171237719783,
+      0.02391584862205599,
+      0.023245215614971143
+    ],
+    "risk_neutral_skewness": [
+      -3.2398732308286156,
+      -3.165487197632527,
+      -3.202521843592383
+    ]
+  },
+  "scope_note": "The maturity dimension of this surface is observed: Cboe publishes at-the-money expected volatility at six horizons, and the calendar no-arbitrage test is run directly on that published curve. The strike dimension is not observed. No free source gives implied volatility strike by strike, so the surface's skew is calibrated to reproduce the one strike-related quantity that is published -- the risk-neutral skewness encoded in Cboe's SKEW index. One number per day is a far thinner constraint than a quoted option chain, and the study's fit statistics should be read in that light. What does not depend on the data at all are the no-arbitrage conditions themselves, which are theorems about the parameterisation and are verified numerically here."
+}

@@ -1,0 +1,2 @@
+days_tested,first_date,last_date,days_with_violation,violation_rate,worst_variance_drop,min_forward_variance,mean_min_forward_variance,days_forward_variance_negative
+3891,2011-01-07,2026-06-30,0,0.0,0.0,0.009150909999999998,0.034641636914390816,0

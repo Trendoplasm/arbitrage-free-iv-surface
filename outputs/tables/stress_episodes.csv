@@ -1,0 +1,6 @@
+episode,date,days_in_window,index_iv_on_the_day,peak_index_iv,peak_skew_index,most_negative_skewness,calendar_violations_in_window,volatility_curve_inverted_days
+Volmageddon,2018-02-05,15,0.3732,0.3732,148.02,-4.802000000000001,0,8
+Covid crash,2020-03-16,15,0.8269,0.8269,132.37,-3.2370000000000005,0,15
+Rate shock,2022-06-13,14,0.34020000000000006,0.34020000000000006,125.16,-2.5159999999999996,0,4
+Yen carry unwind,2024-08-05,15,0.3857,0.3857,147.37,-4.737,0,6
+Tariff shock,2025-04-04,15,0.4531,0.5233,148.68,-4.868,0,11
