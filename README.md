@@ -5,9 +5,7 @@ probabilities, or that a longer-dated option is worth less than a shorter-dated 
 same outcomes. This study builds a surface anchored to observed market data, tests it against the
 conditions that rule both out, and measures what enforcing them costs.
 
-<!-- Once this repository is on GitHub, replace OWNER/REPO below to activate the CI badge:
-[![CI](https://github.com/OWNER/REPO/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/REPO/actions/workflows/ci.yml)
--->
+[![CI](https://github.com/Trendoplasm/arbitrage-free-iv-surface/actions/workflows/ci.yml/badge.svg)](https://github.com/Trendoplasm/arbitrage-free-iv-surface/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-blue)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Lint: ruff](https://img.shields.io/badge/lint-ruff-261230)](https://docs.astral.sh/ruff/)
@@ -249,6 +247,31 @@ fat wings and fine enough to resolve a nine-day slice — whose standard deviati
 is about 0.03 — without becoming enormous. A dense core with sparse wings is accurate to 7×10⁻⁷ at
 a third the size. A coarser uniform grid silently reported density masses off by 7%.
 
+### What reproduces, and what cannot
+
+Bit-for-bit equality is not achievable across platforms. IEEE 754 requires `+ - * / sqrt` to be
+correctly rounded, but deliberately imposes no such requirement on `exp`, `log` or `erf`; the
+variance curve calls `exp`, so the same day fitted on macOS and on Linux starts from inputs that
+differ in the last bit. The calibrations here run to a convergence tolerance of `1e-15` rather
+than SciPy's default `1e-8`, which removes most of the resulting dependence on the host.
+
+Most of the output is then reproducible to `1e-6` relative or better, and is checked at that.
+**Two parameters are not, and the reason is worth stating.** The variance curve fits a long-run
+level `v_long` that the curve decays *toward*, at a rate `kappa`. On days when the fitted `kappa`
+is near zero, no decay is observable inside the one year of data available — `v_long` becomes an
+extrapolation to infinity from a curve that stops at twelve months, and the objective develops a
+flat valley. Refitting such a day from a starting point perturbed in the fifteenth digit moves
+`v_long` by more than `1e-3` on **137 of 3,891 days**, and by as much as 0.38 on the worst, while
+the fit quality is unchanged. On one such day the fitted `v_long` ranges over 1.19 to 1.51 across
+starting points, with the sum of squares agreeing to three significant figures and the held-out
+prediction to seven.
+
+That is a property of the model, not a defect in the arithmetic, and no tolerance setting can make
+an unidentified parameter reproduce. So `v_long` and `kappa` are exempted from the reproduction
+check explicitly, in `verify.py`, rather than being hidden behind a tolerance loose enough to
+swallow them. What the curve is *used* for — its prediction at the held-out maturity — remains
+reproducible to about `5e-5` under the same perturbation, and is checked.
+
 ## Data provenance
 
 Cboe's index history is not redistributed here; `scripts/fetch_cboe_data.py` downloads it from
@@ -269,6 +292,11 @@ volatility index would corrupt every skewness derived from it.
   2022 and including it would make the sample inconsistent across time.
 - **A global SSVI is deliberately rigid.** Freeing more parameters per slice would fit better and
   say less about whether the family describes the market.
+- **The variance curve's `v_long` and `kappa` are not separately identified on every day.** On the
+  3.5% of days where the fitted decay rate is near zero, the data — which stops at one year —
+  cannot pin down a level the curve approaches at infinity. The curve's *predictions* are
+  unaffected; the individual parameters should not be read as estimates on those days. See
+  "What reproduces, and what cannot" above.
 - The Cboe indexes are model-free variance-swap-style measures, not traded option prices. A
   violation in the published curve would not by itself be a tradeable arbitrage.
 - The sufficient conditions are sufficient, not necessary, so the constrained fit is conservative:

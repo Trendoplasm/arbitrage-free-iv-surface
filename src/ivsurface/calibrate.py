@@ -125,7 +125,14 @@ def fit_variance_curve(maturities: Samples, total_variances: Samples) -> Varianc
         errors: np.ndarray = curve.total_variance(years) - observed
         return errors
 
-    solution = least_squares(residual, clipped, bounds=CURVE_BOUNDS, method="trf")
+    # Converge to the floating-point floor rather than to SciPy's default 1e-8. At the default,
+    # the search stops as soon as a step looks unproductive, and *where* it stops depends on the
+    # host's linear-algebra library: the same day fitted on macOS and on Linux terminated at
+    # visibly different parameters. Driving the tolerances down removes that dependence, and
+    # tightens the spread of the fit under a perturbed starting point by roughly 600x.
+    solution = least_squares(
+        residual, clipped, bounds=CURVE_BOUNDS, method="trf", ftol=1e-15, xtol=1e-15, gtol=1e-15
+    )
     return VarianceCurve(*solution.x)
 
 
@@ -288,7 +295,16 @@ def fit_ssvi_to_skewness(
         excess = condition_excess(surface, constraint_points)
         return np.append(errors, ARBITRAGE_PENALTY * excess)
 
-    solution = least_squares(residual, SSVI_INITIAL, bounds=SSVI_BOUNDS, method="trf", xtol=1e-10)
+    # xtol alone still leaves ftol and gtol at 1e-8, which is where this fit was terminating.
+    solution = least_squares(
+        residual,
+        SSVI_INITIAL,
+        bounds=SSVI_BOUNDS,
+        method="trf",
+        ftol=1e-15,
+        xtol=1e-15,
+        gtol=1e-15,
+    )
     surface = SSVI(rho=float(solution.x[0]), eta=float(solution.x[1]), gamma=float(solution.x[2]))
     if enforce_no_arbitrage:
         projected = project_to_arbitrage_free(surface, constraint_points)
@@ -418,5 +434,16 @@ def fit_daily_rho(
         return np.array([modelled - target_skewness if np.isfinite(modelled) else 1e3])
 
     start = float(np.clip(surface.rho, lower + 1e-6, upper - 1e-6))
-    solution = least_squares(residual, [start], bounds=([lower], [upper]), method="trf")
+    # Tightened for the same reason as the variance-curve fit above: the daily correlation feeds
+    # the butterfly and density diagnostics, so an early termination here shows up as
+    # cross-platform drift in the arbitrage numbers this study exists to report.
+    solution = least_squares(
+        residual,
+        [start],
+        bounds=([lower], [upper]),
+        method="trf",
+        ftol=1e-15,
+        xtol=1e-15,
+        gtol=1e-15,
+    )
     return float(solution.x[0])
